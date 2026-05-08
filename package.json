@@ -6,6 +6,14 @@
   "publisher": "dharmatech",
   "license": "MIT",
   "preview": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dharmatech/vscode-rc-shell-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dharmatech/vscode-rc-shell-extension/issues"
+  },
+  "homepage": "https://github.com/dharmatech/vscode-rc-shell-extension#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -39,7 +47,7 @@
           "cpurc",
           "riostart"
         ],
-        "firstLine": "^#!\\s*/(?:usr/[^/]+/)?bin/rc(?:\\s|$)",
+        "firstLine": "^#!\\s*(?:/usr/bin/env\\s+rc|(?:/[^\\s]+)*/rc)(?:\\s|$)",
         "configuration": "./language-configuration.json"
       }
     ],
