@@ -1,0 +1,54 @@
+{
+  "name": "rc-shell",
+  "displayName": "rc Shell",
+  "description": "Syntax highlighting for the rc shell language used by Plan 9, 9front, and plan9port.",
+  "version": "0.0.1",
+  "publisher": "dharmatech",
+  "license": "MIT",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "plan9",
+    "9front",
+    "plan9port",
+    "rc",
+    "shell",
+    "syntax"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "rc",
+        "aliases": [
+          "rc",
+          "Plan 9 rc",
+          "RC Shell"
+        ],
+        "extensions": [
+          ".rc"
+        ],
+        "filenames": [
+          "rc",
+          "rcmain",
+          "termrc",
+          "cpurc",
+          "riostart"
+        ],
+        "firstLine": "^#!\\s*/(?:usr/[^/]+/)?bin/rc(?:\\s|$)",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rc",
+        "scopeName": "source.rc",
+        "path": "./syntaxes/rc.tmLanguage.json"
+      }
+    ]
+  }
+}

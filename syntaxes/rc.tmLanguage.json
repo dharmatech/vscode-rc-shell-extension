@@ -1,0 +1,215 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Plan 9 rc",
+  "scopeName": "source.rc",
+  "patterns": [
+    { "include": "#shebang" },
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#here-docs" },
+    { "include": "#command-substitution" },
+    { "include": "#process-substitution" },
+    { "include": "#redirections" },
+    { "include": "#variables" },
+    { "include": "#function-definition" },
+    { "include": "#keywords" },
+    { "include": "#builtins" },
+    { "include": "#operators" },
+    { "include": "#patterns" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.rc",
+          "match": "(?<![-./\\w])(?:builtin|cd|eval|exec|exit|flag|rfork|shift|wait|whatis|~)(?![-./\\w])"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.rc",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "command-substitution": {
+      "patterns": [
+        {
+          "name": "meta.command-substitution.rc",
+          "begin": "`\\{",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.embedded.begin.rc" }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": { "name": "punctuation.section.embedded.end.rc" }
+          },
+          "patterns": [
+            { "include": "$self" }
+          ]
+        },
+        {
+          "name": "keyword.operator.command-substitution.rc",
+          "match": "`-?"
+        }
+      ]
+    },
+    "function-definition": {
+      "patterns": [
+        {
+          "name": "meta.function.rc",
+          "match": "(?<![-./\\w])(fn)(\\s+)([-+./\\w]+(?:\\s+[-+./\\w]+)*)",
+          "captures": {
+            "1": { "name": "keyword.control.rc" },
+            "3": { "name": "entity.name.function.rc" }
+          }
+        }
+      ]
+    },
+    "here-docs": {
+      "patterns": [
+        {
+          "name": "string.unquoted.heredoc.rc",
+          "begin": "<<(?:\\[[^\\]]+\\])?('?)([A-Za-z_][A-Za-z0-9_]*)\\1",
+          "beginCaptures": {
+            "0": { "name": "keyword.operator.heredoc.rc" },
+            "2": { "name": "entity.name.tag.heredoc.rc" }
+          },
+          "end": "^\\2$",
+          "endCaptures": {
+            "0": { "name": "entity.name.tag.heredoc.rc" }
+          },
+          "patterns": [
+            { "include": "#variables" }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.rc",
+          "match": "(?<![-./\\w])(?:case|for|if|in|not|switch|while)(?![-./\\w])"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.logical.rc",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.pipeline.rc",
+          "match": "\\|(?:\\[[^\\]]+\\])?"
+        },
+        {
+          "name": "keyword.operator.background.rc",
+          "match": "&"
+        },
+        {
+          "name": "keyword.operator.sequence.rc",
+          "match": ";"
+        },
+        {
+          "name": "keyword.operator.concat.rc",
+          "match": "\\^"
+        }
+      ]
+    },
+    "patterns": {
+      "patterns": [
+        {
+          "name": "constant.other.pattern.rc",
+          "match": "(?<!['\\w])(?:\\*|\\?|\\[[^\\]\\r\\n]+\\])"
+        }
+      ]
+    },
+    "process-substitution": {
+      "patterns": [
+        {
+          "name": "meta.process-substitution.rc",
+          "begin": "(?:<>|<|>)\\{",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.embedded.begin.rc" }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": { "name": "punctuation.section.embedded.end.rc" }
+          },
+          "patterns": [
+            { "include": "$self" }
+          ]
+        },
+        {
+          "name": "keyword.operator.process-substitution.rc",
+          "match": "(?:<>|<|>)\\{"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.section.block.rc",
+          "match": "[{}]"
+        },
+        {
+          "name": "punctuation.section.group.rc",
+          "match": "[()]"
+        }
+      ]
+    },
+    "redirections": {
+      "patterns": [
+        {
+          "name": "keyword.operator.redirect.rc",
+          "match": "(?:<>|>>|>|<){1,2}(?:\\[[^\\]]*\\])?"
+        }
+      ]
+    },
+    "shebang": {
+      "patterns": [
+        {
+          "name": "comment.line.shebang.rc",
+          "match": "\\A#!.*\\brc(?:\\s|$).*"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.rc",
+          "begin": "'",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.rc" }
+          },
+          "end": "'(?!')",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.rc" }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.apostrophe.rc",
+              "match": "''"
+            }
+          ]
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.subscript.rc",
+          "match": "\\$(?:[#\"']?)(?:\\*|[0-9]+|[A-Za-z_][A-Za-z0-9_]*)(?=\\()"
+        },
+        {
+          "name": "variable.other.special.rc",
+          "match": "\\$(?:[#\"']?)(?:\\*|[0-9]+|[A-Za-z_][A-Za-z0-9_]*)"
+        }
+      ]
+    }
+  }
+}
